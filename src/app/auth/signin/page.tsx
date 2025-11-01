@@ -8,7 +8,7 @@ import Signin from "@/components/Auth/Signin";
 
 export const metadata: Metadata = {
   title: "Next.js Login Page | pishro - Next.js Dashboard Kit",
-  description: "This is Next.js Login Page pishro Dashboard Kit"
+  description: "This is Next.js Login Page pishro Dashboard Kit",
 };
 
 const SignIn: React.FC = () => {
@@ -38,8 +38,7 @@ const SignIn: React.FC = () => {
               </h1>
 
               <p className="w-full max-w-[375px] font-medium text-dark-4 dark:text-dark-6">
-                Please sign in to your account by completing the necessary
-                fields below
+                لطفا برای ورود به حساب کاربری خود اطلاعات مورد نیاز رو وارد کنید
               </p>
 
               <div className="mt-31">
@@ -49,8 +48,8 @@ const SignIn: React.FC = () => {
           </div>
         </div>
       </div>
-    </DefaultLayout>);
-
+    </DefaultLayout>
+  );
 };
 
 export default SignIn;
