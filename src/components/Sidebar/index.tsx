@@ -40,7 +40,7 @@ const menuGroups = [
           </svg>
         ),
         label: "داشبورد",
-        route: "#",
+        route: "/",
         children: [{ label: "فروشگاه", route: "/" }],
       },
       {

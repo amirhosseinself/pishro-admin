@@ -4,8 +4,8 @@
  * Works with external backend API
  */
 
-const TOKEN_KEY = 'authToken';
-const USER_KEY = 'authUser';
+const TOKEN_KEY = "authToken";
+const USER_KEY = "authUser";
 
 export interface AuthUser {
   id: string;
@@ -21,7 +21,7 @@ export interface AuthUser {
  * Save auth token to localStorage
  */
 export const setAuthToken = (token: string): void => {
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     localStorage.setItem(TOKEN_KEY, token);
   }
 };
@@ -30,7 +30,7 @@ export const setAuthToken = (token: string): void => {
  * Get auth token from localStorage
  */
 export const getAuthToken = (): string | null => {
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     return localStorage.getItem(TOKEN_KEY);
   }
   return null;
@@ -40,7 +40,7 @@ export const getAuthToken = (): string | null => {
  * Remove auth token from localStorage
  */
 export const removeAuthToken = (): void => {
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     localStorage.removeItem(TOKEN_KEY);
   }
 };
@@ -49,7 +49,7 @@ export const removeAuthToken = (): void => {
  * Save user data to localStorage
  */
 export const setAuthUser = (user: AuthUser): void => {
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     localStorage.setItem(USER_KEY, JSON.stringify(user));
   }
 };
@@ -58,7 +58,7 @@ export const setAuthUser = (user: AuthUser): void => {
  * Get user data from localStorage
  */
 export const getAuthUser = (): AuthUser | null => {
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     const userStr = localStorage.getItem(USER_KEY);
     if (userStr) {
       try {
@@ -75,7 +75,7 @@ export const getAuthUser = (): AuthUser | null => {
  * Remove user data from localStorage
  */
 export const removeAuthUser = (): void => {
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     localStorage.removeItem(USER_KEY);
   }
 };
@@ -92,7 +92,7 @@ export const isAuthenticated = (): boolean => {
  */
 export const isAdmin = (): boolean => {
   const user = getAuthUser();
-  return user?.role === 'ADMIN';
+  return user?.role === "ADMIN";
 };
 
 /**
@@ -101,7 +101,7 @@ export const isAdmin = (): boolean => {
 export const logout = (): void => {
   removeAuthToken();
   removeAuthUser();
-  if (typeof window !== 'undefined') {
-    window.location.href = '/auth/signin';
+  if (typeof window !== "undefined") {
+    window.location.href = "/login";
   }
 };

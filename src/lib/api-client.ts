@@ -1,6 +1,10 @@
 // @/lib/api-client.ts
-import axios, { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios';
-import type { ApiResponse } from './api-response';
+import axios, {
+  AxiosError,
+  AxiosInstance,
+  InternalAxiosRequestConfig,
+} from "axios";
+import type { ApiResponse } from "./api-response";
 
 /**
  * Base API Client using Axios
@@ -9,14 +13,15 @@ import type { ApiResponse } from './api-response';
 
 // Base URL configuration - connects directly to backend API
 // CORS has been fixed on the backend, so we can make direct requests
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://pishro-0.vercel.app/api';
+const BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL || "https://pishro-0.vercel.app/api";
 
 // Create Axios instance
 const apiClient: AxiosInstance = axios.create({
   baseURL: BASE_URL,
   timeout: 30000,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
   withCredentials: true, // Important for sending cookies
 });
@@ -25,8 +30,8 @@ const apiClient: AxiosInstance = axios.create({
  * Get auth token from localStorage
  */
 const getAuthToken = (): string | null => {
-  if (typeof window !== 'undefined') {
-    return localStorage.getItem('authToken');
+  if (typeof window !== "undefined") {
+    return localStorage.getItem("authToken");
   }
   return null;
 };
@@ -46,14 +51,14 @@ apiClient.interceptors.request.use(
         config.headers.Authorization = `Bearer ${token}`;
       }
     } catch (error) {
-      console.error('Error getting token in request interceptor:', error);
+      console.error("Error getting token in request interceptor:", error);
     }
 
     return config;
   },
   (error: AxiosError) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 /**
@@ -72,34 +77,34 @@ apiClient.interceptors.response.use(
 
       // Handle authentication errors
       if (status === 401) {
-        console.error('Unauthorized - clearing token and redirecting to login');
+        console.error("Unauthorized - clearing token and redirecting to login");
         // Clear token from localStorage
-        if (typeof window !== 'undefined') {
-          localStorage.removeItem('authToken');
-          localStorage.removeItem('authUser');
-          window.location.href = '/auth/signin';
+        if (typeof window !== "undefined") {
+          localStorage.removeItem("authToken");
+          localStorage.removeItem("authUser");
+          window.location.href = "/login";
         }
       }
 
       // Handle forbidden errors
       if (status === 403) {
-        console.error('Forbidden - insufficient permissions');
+        console.error("Forbidden - insufficient permissions");
       }
 
       // Handle not found errors
       if (status === 404) {
-        console.error('Resource not found');
+        console.error("Resource not found");
       }
 
       // Handle server errors
       if (status >= 500) {
-        console.error('Server error:', data);
+        console.error("Server error:", data);
       }
 
       // Return standardized error
       return Promise.reject({
-        status: data?.status || 'error',
-        message: data?.message || 'An unexpected error occurred',
+        status: data?.status || "error",
+        message: data?.message || "An unexpected error occurred",
         code: (data as any)?.code,
         details: (data as any)?.details,
       });
@@ -107,21 +112,21 @@ apiClient.interceptors.response.use(
 
     // Handle network errors
     if (error.request) {
-      console.error('Network error - no response received');
+      console.error("Network error - no response received");
       return Promise.reject({
-        status: 'error',
-        message: 'Network error. Please check your connection.',
-        code: 'NETWORK_ERROR',
+        status: "error",
+        message: "Network error. Please check your connection.",
+        code: "NETWORK_ERROR",
       });
     }
 
     // Handle other errors
     return Promise.reject({
-      status: 'error',
-      message: error.message || 'An unexpected error occurred',
-      code: 'UNKNOWN_ERROR',
+      status: "error",
+      message: error.message || "An unexpected error occurred",
+      code: "UNKNOWN_ERROR",
     });
-  }
+  },
 );
 
 /**
