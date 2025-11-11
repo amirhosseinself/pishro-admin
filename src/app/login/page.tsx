@@ -15,10 +15,10 @@ export default function LoginPage() {
 
   // اگر کاربر قبلاً login کرده، به dashboard هدایت کن
   useEffect(() => {
-    if (user) {
+    if (!isLoading && user) {
       router.push("/dashboard");
     }
-  }, [user, router]);
+  }, [user, router, isLoading]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
