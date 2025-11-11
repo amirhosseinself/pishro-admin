@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useAuth } from '@/hooks/use-auth';
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/use-auth";
 
 export default function LoginPage() {
-  const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const { login, user } = useAuth();
@@ -16,40 +16,48 @@ export default function LoginPage() {
   // اگر کاربر قبلاً login کرده، به dashboard هدایت کن
   useEffect(() => {
     if (user) {
-      router.push('/dashboard');
+      router.push("/dashboard");
     }
   }, [user, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setIsLoading(true);
 
     try {
       await login(phone, password);
       // بعد از login موفق، به dashboard redirect می‌شود
-      router.push('/dashboard');
+      router.push("/dashboard");
     } catch (err: any) {
-      setError(err.message || 'خطا در ورود');
+      setError(err.message || "خطا در ورود");
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100" dir="rtl">
+    <div
+      className="flex min-h-screen items-center justify-center bg-gray-100"
+      dir="rtl"
+    >
       <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-lg">
         {/* لوگو و عنوان */}
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold text-gray-900">پنل مدیریت پیشرو</h1>
-          <p className="mt-2 text-sm text-gray-600">وارد حساب کاربری خود شوید</p>
+          <p className="mt-2 text-sm text-gray-600">
+            وارد حساب کاربری خود شوید
+          </p>
         </div>
 
         {/* فرم */}
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* شماره تلفن */}
           <div>
-            <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="phone"
+              className="block text-sm font-medium text-gray-700"
+            >
               شماره تلفن
             </label>
             <input
@@ -67,7 +75,10 @@ export default function LoginPage() {
 
           {/* رمز عبور */}
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
               رمز عبور
             </label>
             <input
@@ -84,8 +95,8 @@ export default function LoginPage() {
 
           {/* نمایش خطا */}
           {error && (
-            <div className="rounded-md bg-red-50 p-4">
-              <p className="text-sm text-red-800">{error}</p>
+            <div className="rounded-md bg-red-100 p-4">
+              <p className="text-sm text-red-600">{error}</p>
             </div>
           )}
 
@@ -120,7 +131,7 @@ export default function LoginPage() {
                 در حال ورود...
               </span>
             ) : (
-              'ورود'
+              "ورود"
             )}
           </button>
         </form>
