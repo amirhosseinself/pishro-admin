@@ -2,7 +2,9 @@ import axios from 'axios';
 
 // ایجاد instance axios با تنظیمات پیش‌فرض
 export const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://pishro-0.vercel.app',
+  // اگر NEXT_PUBLIC_API_URL خالی باشد، از API routes محلی Next.js استفاده می‌شود
+  // این کار مشکل CORS را حل می‌کند
+  baseURL: process.env.NEXT_PUBLIC_API_URL || '',
   withCredentials: true, // 🔥 مهم: برای ارسال و دریافت cookies
   headers: {
     'Content-Type': 'application/json',
