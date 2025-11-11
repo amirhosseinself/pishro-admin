@@ -7,8 +7,10 @@ import type { ApiResponse } from './api-response';
  * Centralized configuration for all API requests to external backend
  */
 
-// Base URL configuration - points to external backend API
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
+// Base URL configuration - uses local Next.js API proxy routes
+// Empty string means requests will go to the same origin (local Next.js server)
+// which will then proxy them to the backend, avoiding CORS issues
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
 
 // Create Axios instance
 const apiClient: AxiosInstance = axios.create({
