@@ -1,12 +1,12 @@
 "use client";
 import React from "react";
-import ChartThree from "../Charts/ChartThree";
-import ChartTwo from "../Charts/ChartTwo";
-import ChatCard from "../Chat/ChatCard";
+import dynamic from 'next/dynamic';
 import TableOne from "../Tables/TableOne";
-import MapOne from "../Maps/MapOne";
 import DataStatsOne from "@/components/DataStats/DataStatsOne";
-import ChartOne from "@/components/Charts/ChartOne";
+
+const ChartOne = dynamic(() => import("@/components/Charts/ChartOne"), { ssr: false });
+const ChartTwo = dynamic(() => import("../Charts/ChartTwo"), { ssr: false });
+const ChartThree = dynamic(() => import("../Charts/ChartThree"), { ssr: false });
 
 const ECommerce: React.FC = () => {
   return (

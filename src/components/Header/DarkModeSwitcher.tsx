@@ -1,3 +1,5 @@
+"use client";
+
 import useColorMode from "@/hooks/useColorMode";
 
 const DarkModeSwitcher = () => {
