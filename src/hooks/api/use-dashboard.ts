@@ -1,6 +1,6 @@
 // @/hooks/api/use-dashboard.ts
-import { useQuery } from '@tanstack/react-query';
-import { api } from '@/lib/api-client';
+import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api-client";
 import type {
   DashboardStatsResponse,
   PaymentsDataResponse,
@@ -9,7 +9,7 @@ import type {
   PaymentsQueryParams,
   ProfitQueryParams,
   DevicesQueryParams,
-} from '@/types/api';
+} from "@/types/api";
 
 /**
  * React Query hooks for Dashboard API
@@ -17,11 +17,14 @@ import type {
 
 // Query Keys
 export const dashboardKeys = {
-  all: ['dashboard'] as const,
-  stats: () => [...dashboardKeys.all, 'stats'] as const,
-  payments: (params?: PaymentsQueryParams) => [...dashboardKeys.all, 'payments', params] as const,
-  profit: (params?: ProfitQueryParams) => [...dashboardKeys.all, 'profit', params] as const,
-  devices: (params?: DevicesQueryParams) => [...dashboardKeys.all, 'devices', params] as const,
+  all: ["dashboard"] as const,
+  stats: () => [...dashboardKeys.all, "stats"] as const,
+  payments: (params?: PaymentsQueryParams) =>
+    [...dashboardKeys.all, "payments", params] as const,
+  profit: (params?: ProfitQueryParams) =>
+    [...dashboardKeys.all, "profit", params] as const,
+  devices: (params?: DevicesQueryParams) =>
+    [...dashboardKeys.all, "devices", params] as const,
 };
 
 /**
@@ -31,7 +34,9 @@ export function useDashboardStats() {
   return useQuery({
     queryKey: dashboardKeys.stats(),
     queryFn: async () => {
-      const response = await api.get<DashboardStatsResponse>('/dashboard/stats');
+      const response = await api.get<DashboardStatsResponse>(
+        "/admin/dashboard/stats",
+      );
       return response.data;
     },
     // Cache for 5 minutes
@@ -46,7 +51,10 @@ export function useDashboardPayments(params?: PaymentsQueryParams) {
   return useQuery({
     queryKey: dashboardKeys.payments(params),
     queryFn: async () => {
-      const response = await api.get<PaymentsDataResponse>('/dashboard/payments/monthly', { params });
+      const response = await api.get<PaymentsDataResponse>(
+        "/admin/dashboard/payments/monthly",
+        { params },
+      );
       return response.data;
     },
     // Cache for 5 minutes
@@ -61,7 +69,10 @@ export function useDashboardProfit(params?: ProfitQueryParams) {
   return useQuery({
     queryKey: dashboardKeys.profit(params),
     queryFn: async () => {
-      const response = await api.get<ProfitDataResponse>('/dashboard/profit/weekly', { params });
+      const response = await api.get<ProfitDataResponse>(
+        "/admin/dashboard/profit/weekly",
+        { params },
+      );
       return response.data;
     },
     // Cache for 5 minutes
@@ -76,7 +87,10 @@ export function useDashboardDevices(params?: DevicesQueryParams) {
   return useQuery({
     queryKey: dashboardKeys.devices(params),
     queryFn: async () => {
-      const response = await api.get<DevicesDataResponse>('/dashboard/devices', { params });
+      const response = await api.get<DevicesDataResponse>(
+        "/admin/dashboard/devices",
+        { params },
+      );
       return response.data;
     },
     // Cache for 5 minutes
