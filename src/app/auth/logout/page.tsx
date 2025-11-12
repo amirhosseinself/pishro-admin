@@ -24,7 +24,7 @@ const LogoutPage: React.FC = () => {
 
         // 3. Redirect to login page
         setIsLoggingOut(false);
-        router.push("/auth/signin");
+        router.push("/login");
       }
     };
 

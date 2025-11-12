@@ -102,6 +102,6 @@ export const logout = (): void => {
   removeAuthToken();
   removeAuthUser();
   if (typeof window !== "undefined") {
-    window.location.href = "/auth/signin";
+    window.location.href = "/login";
   }
 };

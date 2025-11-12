@@ -32,7 +32,7 @@ export function ProtectedRoute({ children, requireAdmin = false }: ProtectedRout
 
     // اگر کاربر احراز هویت نشده، به login redirect کن
     if (!user) {
-      router.push('/auth/signin');
+      router.push('/login');
       return;
     }
 
