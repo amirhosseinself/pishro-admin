@@ -23,8 +23,10 @@ const LogoutPage: React.FC = () => {
         removeAuthUser();
 
         // 3. Redirect to login page
-        setIsLoggingOut(false);
-        router.push("/login");
+        setTimeout(() => {
+          setIsLoggingOut(false);
+          router.push("/login");
+        }, 500);
       }
     };
 
