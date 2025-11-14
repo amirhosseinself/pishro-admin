@@ -34,6 +34,16 @@ import type {
   FAQCategory,
   UserRoleType,
   QuestionType,
+  HomeLanding,
+  MobileScrollerStep,
+  AboutPage,
+  ResumeItem,
+  TeamMember,
+  Certificate,
+  InvestmentConsulting,
+  InvestmentPlans,
+  InvestmentPlan,
+  InvestmentTag,
 } from '@prisma/client';
 
 import type { ApiSuccessResponse, PaginatedData } from '@/lib/api-response';
@@ -69,6 +79,16 @@ export type {
   FAQCategory,
   UserRoleType,
   QuestionType,
+  HomeLanding,
+  MobileScrollerStep,
+  AboutPage,
+  ResumeItem,
+  TeamMember,
+  Certificate,
+  InvestmentConsulting,
+  InvestmentPlans,
+  InvestmentPlan,
+  InvestmentTag,
 };
 
 /**
@@ -436,4 +456,124 @@ export interface ProfitQueryParams {
 
 export interface DevicesQueryParams {
   period?: 'monthly' | 'yearly';
+}
+
+/**
+ * CMS Landing Pages Types
+ */
+
+// Home Landing - using Prisma type
+export type HomeLandingListResponse = ApiSuccessResponse<PaginatedData<HomeLanding>>;
+export type HomeLandingResponse = ApiSuccessResponse<HomeLanding>;
+export type CreateHomeLandingRequest = Omit<HomeLanding, 'id' | 'createdAt' | 'updatedAt'>;
+export type UpdateHomeLandingRequest = Partial<CreateHomeLandingRequest>;
+
+export interface HomeLandingQueryParams extends PaginationParams {
+  published?: boolean;
+}
+
+// Mobile Scroller Steps - using Prisma type
+export type MobileScrollerStepListResponse = ApiSuccessResponse<PaginatedData<MobileScrollerStep>>;
+export type MobileScrollerStepResponse = ApiSuccessResponse<MobileScrollerStep>;
+export type CreateMobileScrollerStepRequest = Omit<MobileScrollerStep, 'id' | 'createdAt' | 'updatedAt'>;
+export type UpdateMobileScrollerStepRequest = Partial<CreateMobileScrollerStepRequest>;
+
+export interface MobileScrollerStepQueryParams extends PaginationParams {
+  published?: boolean;
+}
+
+// About Page - using Prisma types
+export interface AboutPageWithRelations extends AboutPage {
+  resumeItems?: ResumeItem[];
+  teamMembers?: TeamMember[];
+  certificates?: Certificate[];
+}
+
+export type AboutPageListResponse = ApiSuccessResponse<PaginatedData<AboutPageWithRelations>>;
+export type AboutPageResponse = ApiSuccessResponse<AboutPageWithRelations>;
+export type CreateAboutPageRequest = Omit<AboutPage, 'id' | 'createdAt' | 'updatedAt'>;
+export type UpdateAboutPageRequest = Partial<CreateAboutPageRequest>;
+
+export interface AboutPageQueryParams extends PaginationParams {
+  published?: boolean;
+}
+
+// Resume Items - using Prisma type
+export type ResumeItemListResponse = ApiSuccessResponse<PaginatedData<ResumeItem>>;
+export type ResumeItemResponse = ApiSuccessResponse<ResumeItem>;
+export type CreateResumeItemRequest = Omit<ResumeItem, 'id' | 'createdAt' | 'updatedAt'>;
+export type UpdateResumeItemRequest = Partial<CreateResumeItemRequest>;
+
+export interface ResumeItemQueryParams extends PaginationParams {
+  aboutPageId?: string;
+  published?: boolean;
+}
+
+// Team Members - using Prisma type
+export type TeamMemberListResponse = ApiSuccessResponse<PaginatedData<TeamMember>>;
+export type TeamMemberResponse = ApiSuccessResponse<TeamMember>;
+export type CreateTeamMemberRequest = Omit<TeamMember, 'id' | 'createdAt' | 'updatedAt'>;
+export type UpdateTeamMemberRequest = Partial<CreateTeamMemberRequest>;
+
+export interface TeamMemberQueryParams extends PaginationParams {
+  aboutPageId?: string;
+  published?: boolean;
+}
+
+// Certificates - using Prisma type
+export type CertificateListResponse = ApiSuccessResponse<PaginatedData<Certificate>>;
+export type CertificateResponse = ApiSuccessResponse<Certificate>;
+export type CreateCertificateRequest = Omit<Certificate, 'id' | 'createdAt' | 'updatedAt'>;
+export type UpdateCertificateRequest = Partial<CreateCertificateRequest>;
+
+export interface CertificateQueryParams extends PaginationParams {
+  aboutPageId?: string;
+  published?: boolean;
+}
+
+// Investment Consulting - using Prisma type
+export type InvestmentConsultingListResponse = ApiSuccessResponse<PaginatedData<InvestmentConsulting>>;
+export type InvestmentConsultingResponse = ApiSuccessResponse<InvestmentConsulting>;
+export type CreateInvestmentConsultingRequest = Omit<InvestmentConsulting, 'id' | 'createdAt' | 'updatedAt'>;
+export type UpdateInvestmentConsultingRequest = Partial<CreateInvestmentConsultingRequest>;
+
+export interface InvestmentConsultingQueryParams extends PaginationParams {
+  published?: boolean;
+}
+
+// Investment Plans - using Prisma types
+export interface InvestmentPlansWithRelations extends InvestmentPlans {
+  plans?: InvestmentPlan[];
+  tags?: InvestmentTag[];
+}
+
+export type InvestmentPlansListResponse = ApiSuccessResponse<PaginatedData<InvestmentPlansWithRelations>>;
+export type InvestmentPlansResponse = ApiSuccessResponse<InvestmentPlansWithRelations>;
+export type CreateInvestmentPlansRequest = Omit<InvestmentPlans, 'id' | 'createdAt' | 'updatedAt'>;
+export type UpdateInvestmentPlansRequest = Partial<CreateInvestmentPlansRequest>;
+
+export interface InvestmentPlansQueryParams extends PaginationParams {
+  published?: boolean;
+}
+
+// Investment Plan Items - using Prisma type
+export type InvestmentPlanListResponse = ApiSuccessResponse<PaginatedData<InvestmentPlan>>;
+export type InvestmentPlanResponse = ApiSuccessResponse<InvestmentPlan>;
+export type CreateInvestmentPlanRequest = Omit<InvestmentPlan, 'id' | 'createdAt' | 'updatedAt'>;
+export type UpdateInvestmentPlanRequest = Partial<CreateInvestmentPlanRequest>;
+
+export interface InvestmentPlanQueryParams extends PaginationParams {
+  investmentPlansId?: string;
+  published?: boolean;
+}
+
+// Investment Tags - using Prisma type
+export type InvestmentTagListResponse = ApiSuccessResponse<PaginatedData<InvestmentTag>>;
+export type InvestmentTagResponse = ApiSuccessResponse<InvestmentTag>;
+export type CreateInvestmentTagRequest = Omit<InvestmentTag, 'id' | 'createdAt' | 'updatedAt'>;
+export type UpdateInvestmentTagRequest = Partial<CreateInvestmentTagRequest>;
+
+export interface InvestmentTagQueryParams extends PaginationParams {
+  investmentPlansId?: string;
+  published?: boolean;
 }

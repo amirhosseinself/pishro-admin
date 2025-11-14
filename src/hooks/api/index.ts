@@ -25,6 +25,13 @@ export * from './use-orders';
 // Enrollments
 export * from './use-enrollments';
 
+// CMS Landing Pages
+export * from './use-home-landing';
+export * from './use-mobile-scroller-steps';
+export * from './use-about-page';
+export * from './use-investment-consulting';
+export * from './use-investment-plans';
+
 // Add more exports as you create additional hook files
 // export * from './use-books';
 // export * from './use-tags';
