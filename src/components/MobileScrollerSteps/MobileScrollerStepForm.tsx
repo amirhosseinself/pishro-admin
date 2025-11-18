@@ -87,7 +87,10 @@ const MobileScrollerStepForm: React.FC<MobileScrollerStepFormProps> = ({
           ? (e.target as HTMLInputElement).checked
           : type === "number"
             ? value === "" ? 0 : Number(value)
-            : value === "" ? null : value,
+            : (() => {
+                const trimmedValue = value.trim();
+                return trimmedValue === "" ? null : trimmedValue;
+              })(),
     }));
   };
 
