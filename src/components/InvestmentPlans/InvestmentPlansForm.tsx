@@ -9,6 +9,7 @@ import {
 } from "@/hooks/api";
 import { toast } from "sonner";
 import type { CreateInvestmentPlansRequest } from "@/types/api";
+import ImageUpload from "@/components/ImageUpload";
 
 interface InvestmentPlansFormProps {
   plansId?: string;
@@ -184,15 +185,16 @@ const InvestmentPlansForm: React.FC<InvestmentPlansFormProps> = ({
           </div>
 
           <div className="mb-5.5">
-            <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-              تصویر (URL)
-            </label>
-            <input
-              type="text"
+            <ImageUpload
+              label="تصویر صفحه طرح‌های سرمایه‌گذاری"
               name="image"
               value={formData.image || ""}
-              onChange={handleChange}
-              className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary dark:border-dark-3 dark:bg-dark-2 dark:text-white"
+              onChange={(url) => setFormData((prev) => ({ ...prev, image: url }))}
+              category="LANDING"
+              showPreview={true}
+              previewWidth={300}
+              previewHeight={200}
+              alt="تصویر صفحه طرح‌های سرمایه‌گذاری"
             />
           </div>
         </div>

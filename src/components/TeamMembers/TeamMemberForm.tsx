@@ -10,6 +10,7 @@ import {
 } from "@/hooks/api/use-about-page";
 import type { CreateTeamMemberRequest } from "@/types/api";
 import { toast } from "sonner";
+import ImageUpload from "@/components/ImageUpload";
 
 interface TeamMemberFormProps {
   memberId?: string;
@@ -183,18 +184,18 @@ const TeamMemberForm: React.FC<TeamMemberFormProps> = ({
             />
           </div>
 
-          {/* Image URL */}
+          {/* Image */}
           <div>
-            <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-              تصویر (URL)
-            </label>
-            <input
-              type="text"
+            <ImageUpload
+              label="تصویر عضو تیم"
               name="image"
               value={formData.image || ""}
-              onChange={handleChange}
-              placeholder="https://example.com/image.jpg"
-              className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition placeholder:text-dark-6 focus:border-primary active:border-primary disabled:cursor-default dark:border-dark-3 dark:bg-dark-2 dark:text-white"
+              onChange={(url) => setFormData((prev) => ({ ...prev, image: url }))}
+              category="TEAM"
+              showPreview={true}
+              previewWidth={150}
+              previewHeight={150}
+              alt="تصویر عضو تیم"
             />
           </div>
 

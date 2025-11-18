@@ -10,7 +10,7 @@ import {
 } from "@/hooks/api/use-about-page";
 import { toast } from "sonner";
 import type { CreateCertificateRequest } from "@/types/api";
-import Image from "next/image";
+import ImageUpload from "@/components/ImageUpload";
 
 interface CertificateFormProps {
   certId?: string;
@@ -151,57 +151,33 @@ const CertificateForm: React.FC<CertificateFormProps> = ({
           />
         </div>
 
-        <div className="grid grid-cols-1 gap-5.5 md:grid-cols-2">
-          {/* Image URL */}
-          <div>
-            <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-              تصویر (URL) <span className="text-red">*</span>
-            </label>
-            <input
-              type="text"
-              name="image"
-              value={formData.image}
-              onChange={handleChange}
-              required
-              placeholder="https://example.com/certificate.jpg"
-              className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition placeholder:text-dark-6 focus:border-primary active:border-primary disabled:cursor-default dark:border-dark-3 dark:bg-dark-2 dark:text-white"
-            />
-          </div>
-
-          {/* Order */}
-          <div>
-            <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-              ترتیب نمایش
-            </label>
-            <input
-              type="number"
-              name="order"
-              value={formData.order}
-              onChange={handleChange}
-              className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition placeholder:text-dark-6 focus:border-primary active:border-primary disabled:cursor-default dark:border-dark-3 dark:bg-dark-2 dark:text-white"
-            />
-          </div>
+        <div className="mb-5.5">
+          <ImageUpload
+            label="تصویر گواهینامه"
+            name="image"
+            value={formData.image}
+            onChange={(url) => setFormData((prev) => ({ ...prev, image: url }))}
+            category="CERTIFICATE"
+            required={true}
+            showPreview={true}
+            previewWidth={300}
+            previewHeight={200}
+            alt="تصویر گواهینامه"
+          />
         </div>
 
-        {/* Image Preview */}
-        {formData.image && (
-          <div className="mb-5.5 mt-5">
-            <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-              پیش‌نمایش تصویر
-            </label>
-            <div className="rounded-lg border border-stroke p-4">
-              <Image
-                src={formData.image}
-                alt="Certificate preview"
-                className="max-h-60 rounded object-contain"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = "none";
-                }}
-                fill
-              />
-            </div>
-          </div>
-        )}
+        <div className="mb-5.5">
+          <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
+            ترتیب نمایش
+          </label>
+          <input
+            type="number"
+            name="order"
+            value={formData.order}
+            onChange={handleChange}
+            className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition placeholder:text-dark-6 focus:border-primary active:border-primary disabled:cursor-default dark:border-dark-3 dark:bg-dark-2 dark:text-white"
+          />
+        </div>
 
         {/* Published */}
         <div className="mb-5.5">

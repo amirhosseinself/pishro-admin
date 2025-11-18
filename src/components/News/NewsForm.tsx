@@ -10,6 +10,7 @@ import {
 import { toast } from "sonner";
 import { useCategories } from "@/hooks/api/use-categories";
 import type { CreateNewsRequest } from "@/types/api";
+import ImageUpload from "@/components/ImageUpload";
 
 interface NewsFormProps {
   newsId?: string;
@@ -246,15 +247,16 @@ const NewsForm: React.FC<NewsFormProps> = ({ newsId, isEdit = false }) => {
         </div>
 
         <div className="mb-5.5">
-          <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-            تصویر کاور (URL)
-          </label>
-          <input
-            type="text"
+          <ImageUpload
+            label="تصویر کاور خبر"
             name="coverImage"
             value={formData.coverImage || ""}
-            onChange={handleChange}
-            className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary dark:border-dark-3 dark:bg-dark-2 dark:text-white"
+            onChange={(url) => setFormData((prev) => ({ ...prev, coverImage: url }))}
+            category="NEWS"
+            showPreview={true}
+            previewWidth={300}
+            previewHeight={200}
+            alt="تصویر کاور خبر"
           />
         </div>
 

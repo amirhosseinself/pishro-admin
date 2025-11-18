@@ -10,6 +10,7 @@ import {
 import { useCourses } from "@/hooks/api/use-courses";
 import { toast } from "sonner";
 import type { CreateLessonRequest } from "@/types/api";
+import ImageUpload from "@/components/ImageUpload";
 
 interface LessonFormProps {
   lessonId?: string;
@@ -188,16 +189,16 @@ const LessonForm: React.FC<LessonFormProps> = ({
 
         {/* Thumbnail */}
         <div className="mb-5.5">
-          <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-            URL تصویر بندانگشتی
-          </label>
-          <input
-            type="url"
+          <ImageUpload
+            label="تصویر بندانگشتی درس"
             name="thumbnail"
             value={formData.thumbnail || ""}
-            onChange={handleChange}
-            placeholder="https://example.com/thumbnail.jpg"
-            className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary dark:border-dark-3 dark:bg-dark-2 dark:text-white"
+            onChange={(url) => setFormData((prev) => ({ ...prev, thumbnail: url }))}
+            category="COURSE"
+            showPreview={true}
+            previewWidth={300}
+            previewHeight={180}
+            alt="تصویر بندانگشتی درس"
           />
         </div>
 

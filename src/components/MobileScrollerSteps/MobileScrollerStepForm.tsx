@@ -9,6 +9,7 @@ import {
 } from "@/hooks/api";
 import { toast } from "sonner";
 import type { CreateMobileScrollerStepRequest } from "@/types/api";
+import ImageUpload from "@/components/ImageUpload";
 
 interface MobileScrollerStepFormProps {
   stepId?: string;
@@ -158,30 +159,30 @@ const MobileScrollerStepForm: React.FC<MobileScrollerStepFormProps> = ({
         </div>
 
         <div className="mb-5.5">
-          <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-            لینک تصویر داخل موبایل
-          </label>
-          <input
-            type="text"
+          <ImageUpload
+            label="تصویر داخل موبایل"
             name="imageUrl"
             value={formData.imageUrl || ""}
-            onChange={handleChange}
-            placeholder="مثال: /images/in-mobile-1.svg"
-            className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary dark:border-dark-3 dark:bg-dark-2 dark:text-white"
+            onChange={(url) => setFormData((prev) => ({ ...prev, imageUrl: url }))}
+            category="LANDING"
+            showPreview={true}
+            previewWidth={200}
+            previewHeight={350}
+            alt="تصویر داخل موبایل"
           />
         </div>
 
         <div className="mb-5.5">
-          <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-            لینک تصویر پس‌زمینه موبایل
-          </label>
-          <input
-            type="text"
+          <ImageUpload
+            label="تصویر پس‌زمینه موبایل"
             name="coverImageUrl"
             value={formData.coverImageUrl || ""}
-            onChange={handleChange}
-            placeholder="مثال: /images/mobile-bg-1.jpg"
-            className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary dark:border-dark-3 dark:bg-dark-2 dark:text-white"
+            onChange={(url) => setFormData((prev) => ({ ...prev, coverImageUrl: url }))}
+            category="LANDING"
+            showPreview={true}
+            previewWidth={250}
+            previewHeight={400}
+            alt="تصویر پس‌زمینه موبایل"
           />
         </div>
 
