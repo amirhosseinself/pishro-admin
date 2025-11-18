@@ -103,8 +103,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       clearInterval(progressInterval);
       setUploadProgress(100);
 
-      if (response.data.data.url) {
-        onChange(response.data.data.url);
+      if (response.data.filePath) {
+        onChange(response.data.filePath);
         toast.success("تصویر با موفقیت آپلود شد");
       }
     } catch (error: any) {
