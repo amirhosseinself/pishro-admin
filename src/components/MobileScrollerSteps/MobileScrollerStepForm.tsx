@@ -31,6 +31,7 @@ const MobileScrollerStepForm: React.FC<MobileScrollerStepFormProps> = ({
     imageUrl: null,
     coverImageUrl: null,
     gradient: null,
+    link: null,
     order: 0,
     published: true,
   });
@@ -45,6 +46,7 @@ const MobileScrollerStepForm: React.FC<MobileScrollerStepFormProps> = ({
         imageUrl: data.imageUrl || null,
         coverImageUrl: data.coverImageUrl || null,
         gradient: data.gradient || null,
+        link: data.link || null,
         order: data.order,
         published: data.published,
       });
@@ -193,6 +195,20 @@ const MobileScrollerStepForm: React.FC<MobileScrollerStepFormProps> = ({
             value={formData.gradient || ""}
             onChange={handleChange}
             placeholder="مثال: from-blue-500 to-purple-500"
+            className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary dark:border-dark-3 dark:bg-dark-2 dark:text-white"
+          />
+        </div>
+
+        <div className="mb-5.5">
+          <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
+            لینک دکمه اطلاعات بیشتر
+          </label>
+          <input
+            type="text"
+            name="link"
+            value={formData.link || ""}
+            onChange={handleChange}
+            placeholder="مثال: /courses"
             className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary dark:border-dark-3 dark:bg-dark-2 dark:text-white"
           />
         </div>

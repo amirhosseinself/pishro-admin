@@ -30,6 +30,7 @@ const LessonForm: React.FC<LessonFormProps> = ({
     courseId: "",
     title: "",
     description: "",
+    videoId: null,
     videoUrl: "",
     thumbnail: "",
     duration: "",
@@ -45,6 +46,7 @@ const LessonForm: React.FC<LessonFormProps> = ({
         courseId: lesson.courseId,
         title: lesson.title,
         description: lesson.description || "",
+        videoId: lesson.videoId || null,
         videoUrl: lesson.videoUrl,
         thumbnail: lesson.thumbnail || "",
         duration: lesson.duration || "",
@@ -69,7 +71,7 @@ const LessonForm: React.FC<LessonFormProps> = ({
       return;
     }
 
-    if (!formData.videoUrl.trim()) {
+    if (!formData.videoUrl || !formData.videoUrl.trim()) {
       toast.error("لطفاً URL ویدیو را وارد کنید");
       return;
     }
@@ -176,7 +178,7 @@ const LessonForm: React.FC<LessonFormProps> = ({
           <input
             type="url"
             name="videoUrl"
-            value={formData.videoUrl}
+            value={formData.videoUrl || ""}
             onChange={handleChange}
             required
             placeholder="https://example.com/video.mp4"

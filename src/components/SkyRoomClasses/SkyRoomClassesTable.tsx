@@ -7,7 +7,6 @@ import {
   useDeleteSkyRoomClass,
 } from "@/hooks/api/use-skyroom-classes";
 import type { SkyRoomClass } from "@/types/api";
-import Image from "next/image";
 import { toast } from "sonner";
 
 const SkyRoomClassesTable: React.FC = () => {
@@ -20,8 +19,8 @@ const SkyRoomClassesTable: React.FC = () => {
   });
   const deleteSkyRoomClass = useDeleteSkyRoomClass();
 
-  const handleDelete = async (id: string, title: string) => {
-    if (window.confirm(`آیا از حذف کلاس "${title}" اطمینان دارید؟`)) {
+  const handleDelete = async (id: string) => {
+    if (window.confirm(`آیا از حذف این کلاس اطمینان دارید؟`)) {
       try {
         await deleteSkyRoomClass.mutateAsync(id);
         toast.success("کلاس با موفقیت حذف شد");
@@ -87,28 +86,12 @@ const SkyRoomClassesTable: React.FC = () => {
             <table className="w-full table-auto">
               <thead>
                 <tr className="bg-[#F7F9FC] text-right dark:bg-dark-2">
-                  <th className="min-w-[200px] px-4 py-4 font-medium text-dark dark:text-white">
-                    عنوان کلاس
+                  <th className="min-w-[300px] px-4 py-4 font-medium text-dark dark:text-white">
+                    لینک کلاس
                   </th>
 
                   <th className="min-w-[120px] px-4 py-4 font-medium text-dark dark:text-white">
-                    مدرس
-                  </th>
-
-                  <th className="min-w-[120px] px-4 py-4 font-medium text-dark dark:text-white">
-                    تاریخ شروع
-                  </th>
-
-                  <th className="min-w-[100px] px-4 py-4 font-medium text-dark dark:text-white">
-                    مدت زمان
-                  </th>
-
-                  <th className="min-w-[80px] px-4 py-4 font-medium text-dark dark:text-white">
-                    ظرفیت
-                  </th>
-
-                  <th className="min-w-[100px] px-4 py-4 font-medium text-dark dark:text-white">
-                    سطح
+                    تاریخ ایجاد
                   </th>
 
                   <th className="min-w-[100px] px-4 py-4 font-medium text-dark dark:text-white">
@@ -131,28 +114,14 @@ const SkyRoomClassesTable: React.FC = () => {
                           : "border-b"
                       }`}
                     >
-                      <div className="flex items-center gap-3">
-                        {skyRoomClass.thumbnail && (
-                          <Image
-                            src={skyRoomClass.thumbnail}
-                            alt={skyRoomClass.title}
-                            width={48}
-                            height={48}
-                            className="h-12 w-12 rounded object-cover"
-                          />
-                        )}
-
-                        <div>
-                          <h5 className="font-medium text-dark dark:text-white">
-                            {skyRoomClass.title}
-                          </h5>
-                          {skyRoomClass.description && (
-                            <p className="text-body text-body-sm line-clamp-1">
-                              {skyRoomClass.description}
-                            </p>
-                          )}
-                        </div>
-                      </div>
+                      <a
+                        href={skyRoomClass.meetingLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary hover:underline"
+                      >
+                        {skyRoomClass.meetingLink}
+                      </a>
                     </td>
 
                     <td
@@ -163,55 +132,7 @@ const SkyRoomClassesTable: React.FC = () => {
                       }`}
                     >
                       <p className="text-dark dark:text-white">
-                        {skyRoomClass.instructor || "-"}
-                      </p>
-                    </td>
-
-                    <td
-                      className={`border-[#eee] px-4 py-4 dark:border-dark-3 ${
-                        index === (data?.data?.items?.length ?? 0) - 1
-                          ? "border-b-0"
-                          : "border-b"
-                      }`}
-                    >
-                      <p className="text-dark dark:text-white">
-                        {formatDate(skyRoomClass.startDate)}
-                      </p>
-                    </td>
-
-                    <td
-                      className={`border-[#eee] px-4 py-4 dark:border-dark-3 ${
-                        index === (data?.data?.items?.length ?? 0) - 1
-                          ? "border-b-0"
-                          : "border-b"
-                      }`}
-                    >
-                      <p className="text-dark dark:text-white">
-                        {skyRoomClass.duration || "-"}
-                      </p>
-                    </td>
-
-                    <td
-                      className={`border-[#eee] px-4 py-4 dark:border-dark-3 ${
-                        index === (data?.data?.items?.length ?? 0) - 1
-                          ? "border-b-0"
-                          : "border-b"
-                      }`}
-                    >
-                      <p className="text-dark dark:text-white">
-                        {skyRoomClass.capacity || "-"}
-                      </p>
-                    </td>
-
-                    <td
-                      className={`border-[#eee] px-4 py-4 dark:border-dark-3 ${
-                        index === (data?.data?.items?.length ?? 0) - 1
-                          ? "border-b-0"
-                          : "border-b"
-                      }`}
-                    >
-                      <p className="text-dark dark:text-white">
-                        {skyRoomClass.level || "-"}
+                        {formatDate(skyRoomClass.createdAt)}
                       </p>
                     </td>
 
@@ -267,9 +188,7 @@ const SkyRoomClassesTable: React.FC = () => {
                         </Link>
 
                         <button
-                          onClick={() =>
-                            handleDelete(skyRoomClass.id, skyRoomClass.title)
-                          }
+                          onClick={() => handleDelete(skyRoomClass.id)}
                           className="hover:text-danger"
                           title="حذف"
                           disabled={deleteSkyRoomClass.isPending}

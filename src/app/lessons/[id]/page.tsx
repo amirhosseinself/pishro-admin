@@ -162,19 +162,21 @@ const ViewLessonPage = () => {
             )}
 
             {/* Video URL */}
-            <div className="mb-7">
-              <label className="mb-2 block text-body-sm font-medium text-dark dark:text-white">
-                URL ویدیو
-              </label>
-              <a
-                href={lesson.videoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary hover:underline"
-              >
-                {lesson.videoUrl}
-              </a>
-            </div>
+            {lesson.videoUrl && (
+              <div className="mb-7">
+                <label className="mb-2 block text-body-sm font-medium text-dark dark:text-white">
+                  URL ویدیو
+                </label>
+                <a
+                  href={lesson.videoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline"
+                >
+                  {lesson.videoUrl}
+                </a>
+              </div>
+            )}
 
             {/* Dates */}
             <div className="grid grid-cols-1 gap-5 border-t border-stroke pt-5 dark:border-dark-3 sm:grid-cols-2">
