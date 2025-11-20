@@ -11,6 +11,7 @@ import { useCourses } from "@/hooks/api/use-courses";
 import { toast } from "sonner";
 import type { CreateLessonRequest } from "@/types/api";
 import ImageUpload from "@/components/ImageUpload";
+import VideoUpload from "@/components/VideoUpload";
 
 interface LessonFormProps {
   lessonId?: string;
@@ -72,8 +73,9 @@ const LessonForm: React.FC<LessonFormProps> = ({
       return;
     }
 
-    if (!formData.videoUrl || !formData.videoUrl.trim()) {
-      toast.error("لطفاً URL ویدیو را وارد کنید");
+    // بررسی اینکه یا ویدیو آپلود شده باشد یا URL وارد شده باشد
+    if (!formData.videoId && (!formData.videoUrl || !formData.videoUrl.trim())) {
+      toast.error("لطفاً ویدیو را آپلود کنید یا URL ویدیو را وارد کنید");
       return;
     }
 
@@ -171,20 +173,43 @@ const LessonForm: React.FC<LessonFormProps> = ({
           />
         </div>
 
-        {/* Video URL */}
+        {/* Video Upload */}
+        <div className="mb-5.5">
+          <VideoUpload
+            label="ویدیوی درس"
+            name="video"
+            videoId={formData.videoId}
+            onChange={(videoId, videoUrl) => {
+              setFormData((prev) => ({
+                ...prev,
+                videoId: videoId || null,
+                videoUrl: videoUrl || "",
+              }));
+            }}
+            required={!formData.videoUrl}
+            showVideoList={true}
+          />
+          <p className="mt-2 text-body-xs text-body">
+            ویدیوی درس را آپلود کنید یا از ویدیوهای موجود انتخاب نمایید
+          </p>
+        </div>
+
+        {/* Video URL (Alternative) */}
         <div className="mb-5.5">
           <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-            URL ویدیو <span className="text-red">*</span>
+            یا URL ویدیوی خارجی {!formData.videoId && <span className="text-red">*</span>}
           </label>
           <input
             type="url"
             name="videoUrl"
             value={formData.videoUrl || ""}
             onChange={handleChange}
-            required
             placeholder="https://example.com/video.mp4"
             className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary dark:border-dark-3 dark:bg-dark-2 dark:text-white"
           />
+          <p className="mt-1 text-body-xs text-body">
+            اگر ویدیو را آپلود نکردید، می‌توانید لینک مستقیم ویدیو را وارد کنید
+          </p>
         </div>
 
         {/* Thumbnail */}
