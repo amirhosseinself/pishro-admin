@@ -29,6 +29,7 @@ const AboutPageForm: React.FC<AboutPageFormProps> = ({
     heroSubtitle: null,
     heroDescription: null,
     heroBadgeText: null,
+    doctorIntroVideoUrl: null,
     heroStats: [],
     resumeTitle: null,
     resumeSubtitle: null,
@@ -60,6 +61,7 @@ const AboutPageForm: React.FC<AboutPageFormProps> = ({
         heroSubtitle: data.heroSubtitle || null,
         heroDescription: data.heroDescription || null,
         heroBadgeText: data.heroBadgeText || null,
+        doctorIntroVideoUrl: data.doctorIntroVideoUrl || null,
         heroStats: data.heroStats || [],
         resumeTitle: data.resumeTitle || null,
         resumeSubtitle: data.resumeSubtitle || null,
@@ -214,6 +216,20 @@ const AboutPageForm: React.FC<AboutPageFormProps> = ({
               name="heroBadgeText"
               value={formData.heroBadgeText || ""}
               onChange={handleChange}
+              className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary dark:border-dark-3 dark:bg-dark-2 dark:text-white"
+            />
+          </div>
+
+          <div className="mb-5.5">
+            <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
+              آدرس ویدیو معرفی دکتر
+            </label>
+            <input
+              type="text"
+              name="doctorIntroVideoUrl"
+              value={formData.doctorIntroVideoUrl || ""}
+              onChange={handleChange}
+              placeholder="https://example.com/video.mp4"
               className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary dark:border-dark-3 dark:bg-dark-2 dark:text-white"
             />
           </div>

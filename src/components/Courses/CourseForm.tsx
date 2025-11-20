@@ -57,6 +57,8 @@ const CourseForm: React.FC<CourseFormProps> = ({
 
     videosCount: null,
 
+    introVideoUrl: null,
+
     level: "BEGINNER",
 
     language: "FA",
@@ -104,6 +106,8 @@ const CourseForm: React.FC<CourseFormProps> = ({
         students: course.students || null,
 
         videosCount: course.videosCount || null,
+
+        introVideoUrl: course.introVideoUrl || null,
 
         level: course.level || "BEGINNER",
 
@@ -421,6 +425,20 @@ const CourseForm: React.FC<CourseFormProps> = ({
             previewWidth={300}
             previewHeight={200}
             alt="تصویر کاور دوره"
+          />
+        </div>
+
+        <div className="mb-5.5">
+          <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
+            آدرس ویدیو معرفی دوره
+          </label>
+          <input
+            type="text"
+            name="introVideoUrl"
+            value={formData.introVideoUrl || ""}
+            onChange={handleChange}
+            placeholder="https://example.com/video.mp4"
+            className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary dark:border-dark-3 dark:bg-dark-2 dark:text-white"
           />
         </div>
 
