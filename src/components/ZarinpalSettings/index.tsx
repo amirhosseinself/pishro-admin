@@ -1,82 +1,40 @@
 "use client";
 import React, { useState, useEffect } from "react";
-
-interface SiteSettings {
-  id: string;
-  zarinpalMerchantId?: string | null;
-  siteName?: string | null;
-  siteDescription?: string | null;
-  supportEmail?: string | null;
-  supportPhone?: string | null;
-  createdAt: string;
-  updatedAt: string;
-}
+import { useSettings, useUpdateSettings } from "@/hooks/api/use-settings";
 
 const ZarinpalSettings = () => {
-  const [settings, setSettings] = useState<SiteSettings | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
+  const { data: settingsData, isLoading, error: loadError } = useSettings();
+  const updateSettings = useUpdateSettings();
+
   const [merchantId, setMerchantId] = useState("");
+  const [localError, setLocalError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
 
-  // بارگذاری تنظیمات فعلی
+  // بارگذاری مقدار اولیه merchant ID
   useEffect(() => {
-    loadSettings();
-  }, []);
-
-  async function loadSettings() {
-    try {
-      const response = await fetch("/api/admin/settings", {
-        credentials: "include",
-      });
-      const result = await response.json();
-
-      if (result.success) {
-        setSettings(result.data);
-        setMerchantId(result.data.zarinpalMerchantId || "");
-      } else {
-        setError(result.error || "خطا در بارگذاری تنظیمات");
-      }
-    } catch (err) {
-      setError("خطا در بارگذاری تنظیمات");
-      console.error(err);
+    if (settingsData?.data) {
+      setMerchantId(settingsData.data.zarinpalMerchantId || "");
     }
-  }
+  }, [settingsData]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setLoading(true);
-    setError(null);
+    setLocalError(null);
     setSuccess(null);
 
     try {
-      const response = await fetch("/api/admin/settings", {
-        method: "PATCH",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          zarinpalMerchantId: merchantId.trim() || null,
-        }),
+      await updateSettings.mutateAsync({
+        zarinpalMerchantId: merchantId.trim() || null,
       });
 
-      const result = await response.json();
-
-      if (result.success) {
-        setSettings(result.data);
-        setSuccess("✅ تنظیمات با موفقیت به‌روزرسانی شد");
-        setTimeout(() => setSuccess(null), 5000);
-      } else {
-        setError(result.message || result.error || "خطا در ذخیره تنظیمات");
-      }
-    } catch (err) {
-      setError("خطا در ذخیره تنظیمات");
-      console.error(err);
-    } finally {
-      setLoading(false);
+      setSuccess("✅ تنظیمات با موفقیت به‌روزرسانی شد");
+      setTimeout(() => setSuccess(null), 5000);
+    } catch (err: any) {
+      setLocalError(err.message || "خطا در ذخیره تنظیمات");
     }
   }
 
-  if (!settings && !error) {
+  if (isLoading) {
     return (
       <div className="rounded-[10px] border border-stroke bg-white shadow-1 dark:border-dark-3 dark:bg-gray-dark dark:shadow-card">
         <div className="border-b border-stroke px-7 py-4 dark:border-dark-3">
@@ -90,6 +48,8 @@ const ZarinpalSettings = () => {
       </div>
     );
   }
+
+  const error = localError || (loadError as any)?.message;
 
   return (
     <div className="rounded-[10px] border border-stroke bg-white shadow-1 dark:border-dark-3 dark:bg-gray-dark dark:shadow-card">
@@ -170,21 +130,21 @@ const ZarinpalSettings = () => {
             <button
               className="flex justify-center rounded-[7px] border border-stroke px-6 py-[7px] font-medium text-dark hover:shadow-1 dark:border-dark-3 dark:text-white"
               type="button"
-              onClick={() => setMerchantId(settings?.zarinpalMerchantId || "")}
+              onClick={() => setMerchantId(settingsData?.data?.zarinpalMerchantId || "")}
             >
               انصراف
             </button>
             <button
               className="flex justify-center rounded-[7px] bg-primary px-6 py-[7px] font-medium text-gray-2 hover:bg-opacity-90 disabled:opacity-50"
               type="submit"
-              disabled={loading}
+              disabled={updateSettings.isPending}
             >
-              {loading ? "در حال ذخیره..." : "ذخیره تنظیمات"}
+              {updateSettings.isPending ? "در حال ذخیره..." : "ذخیره تنظیمات"}
             </button>
           </div>
         </form>
 
-        {settings?.zarinpalMerchantId && (
+        {settingsData?.data?.zarinpalMerchantId && (
           <div className="mt-6 rounded-md border border-stroke bg-gray-2 p-4 dark:border-dark-3 dark:bg-dark-2">
             <h4 className="mb-2 text-sm font-medium text-dark dark:text-white">
               وضعیت فعلی
