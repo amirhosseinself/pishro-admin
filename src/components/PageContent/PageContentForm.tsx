@@ -14,11 +14,13 @@ import type { CreatePageContentRequest } from "@/types/api";
 interface PageContentFormProps {
   contentId?: string;
   isEdit?: boolean;
+  defaultType?: string;
 }
 
 const PageContentForm: React.FC<PageContentFormProps> = ({
   contentId,
   isEdit = false,
+  defaultType,
 }) => {
   const router = useRouter();
   const createPageContent = useCreatePageContent();
@@ -29,7 +31,7 @@ const PageContentForm: React.FC<PageContentFormProps> = ({
   const [contentJsonString, setContentJsonString] = useState("{}");
   const [formData, setFormData] = useState<CreatePageContentRequest>({
     categoryId: "",
-    type: "LANDING",
+    type: (defaultType || "LANDING") as any,
     section: null,
     title: null,
     subtitle: null,
@@ -160,6 +162,7 @@ const PageContentForm: React.FC<PageContentFormProps> = ({
               <option value="TESTIMONIAL">TESTIMONIAL</option>
               <option value="HERO">HERO</option>
               <option value="STATS">STATS</option>
+              <option value="blog">BLOG</option>
             </select>
           </div>
         </div>
