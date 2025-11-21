@@ -84,17 +84,25 @@ const BlogsTable: React.FC = () => {
 
               <tbody>
                 {data?.data?.items?.map(
-                  (blog: PageContent, index: number) => (
+                  (blog: PageContent, index: number) => {
+                    // Extract blog-specific fields from content JSON
+                    const blogContent = blog.content as any;
+                    const coverImage = blogContent?.coverImage;
+                    const slug = blogContent?.slug;
+                    const author = blogContent?.author;
+                    const views = blogContent?.views;
+
+                    return (
                     <tr key={blog.id}>
                       <td
                         className={`border-[#eee] px-4 py-4 dark:border-dark-3 ${index === data.data.items.length - 1 ? "border-b-0" : "border-b"}`}
                       >
                         <div className="flex items-center gap-3">
-                          {blog.coverImage && (
+                          {coverImage && (
                             <div className="h-12 w-12 overflow-hidden rounded">
                               <Image
-                                src={blog.coverImage}
-                                alt={blog.title}
+                                src={coverImage}
+                                alt={blog.title || "Blog"}
                                 width={48}
                                 height={48}
                                 className="h-full w-full object-cover"
@@ -104,11 +112,11 @@ const BlogsTable: React.FC = () => {
 
                           <div>
                             <h5 className="font-medium text-dark dark:text-white">
-                              {blog.title}
+                              {blog.title || "بدون عنوان"}
                             </h5>
 
                             <p className="text-body text-body-sm">
-                              {blog.slug}
+                              {slug || "-"}
                             </p>
                           </div>
                         </div>
@@ -118,7 +126,7 @@ const BlogsTable: React.FC = () => {
                         className={`border-[#eee] px-4 py-4 dark:border-dark-3 ${index === data.data.items.length - 1 ? "border-b-0" : "border-b"}`}
                       >
                         <p className="text-dark dark:text-white">
-                          {blog.author || "-"}
+                          {author || "-"}
                         </p>
                       </td>
 
@@ -136,7 +144,7 @@ const BlogsTable: React.FC = () => {
                         className={`border-[#eee] px-4 py-4 dark:border-dark-3 ${index === data.data.items.length - 1 ? "border-b-0" : "border-b"}`}
                       >
                         <p className="text-dark dark:text-white">
-                          {blog.views || 0}
+                          {views || 0}
                         </p>
                       </td>
 
@@ -181,7 +189,8 @@ const BlogsTable: React.FC = () => {
                         </div>
                       </td>
                     </tr>
-                  ),
+                    );
+                  },
                 )}
               </tbody>
             </table>
